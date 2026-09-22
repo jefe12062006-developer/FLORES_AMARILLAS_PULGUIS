@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flores Amarillas 💛</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+
+<style>
+body{
+  margin:0;
+  font-family:'Poppins',sans-serif;
+  background: linear-gradient(135deg,#fff7cc,#ffe680,#fff0b3);
+  text-align:center;
+  overflow-x:hidden;
+}
+
+/* FLORES FONDO */
+.flor{
+  position:fixed;
+  top:-50px;
+  font-size:24px;
+  animation:caer linear infinite;
+}
+@keyframes caer{
+  to{ transform: translateY(110vh) rotate(360deg);}
+}
+
+/* CONTENIDO */
+.container{
+  padding:40px 20px;
+}
+
+h1{
+  font-family:'Dancing Script',cursive;
+  font-size:3rem;
+  color:#d4a017;
+}
+
+button{
+  padding:12px 25px;
+  border:none;
+  border-radius:20px;
+  background:#ffd633;
+  cursor:pointer;
+  font-weight:bold;
+  transition:0.3s;
+}
+button:hover{
+  transform:scale(1.1);
+}
+
+/* CARTA */
+.carta{
+  margin-top:20px;
+  max-width:600px;
+  margin-left:auto;
+  margin-right:auto;
+  font-size:18px;
+  min-height:120px;
+}
+
+/* GALERIA */
+.galeria img{
+  width:260px;
+  border-radius:20px;
+  margin-top:20px;
+  box-shadow:0 10px 25px rgba(0,0,0,0.2);
+  transition:0.4s;
+}
+.galeria img:hover{
+  transform:scale(1.05);
+}
+
+/* FLORES CLICK */
+.flor-click{
+  font-size:40px;
+  cursor:pointer;
+  margin:10px;
+  display:inline-block;
+}
+
+/* CORAZONES */
+.corazon{
+  position:absolute;
+  animation:subir 2s forwards;
+}
+@keyframes subir{
+  to{ transform: translateY(-150px); opacity:0;}
+}
+
+/* LATIDO */
+.latido{
+  font-size:40px;
+  animation:latir 1s infinite;
+}
+@keyframes latir{
+  0%,100%{ transform:scale(1);}
+  50%{ transform:scale(1.3);}
+}
+
+/* SECRETO */
+.secreto{
+  display:none;
+  margin-top:20px;
+}
+.secreto img{
+  width:220px;
+  border-radius:20px;
+  box-shadow:0 10px 25px rgba(0,0,0,0.2);
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+  <h1>🌼 Para ti 💛</h1>
+
+  <button onclick="iniciar()">Ábrelo ❤️</button>
+
+  <div class="carta" id="carta"></div>
+
+  <!-- GALERIA -->
+  <div class="galeria">
+    <img id="slide" src="img/foto1.jpg">
+  </div>
+
+  <!-- FLORES INTERACTIVAS -->
+  <div>
+    <span class="flor-click" onclick="mostrarFoto(this)">🌻</span>
+    <span class="flor-click" onclick="mostrarFoto(this)">🌼</span>
+    <span class="flor-click" onclick="mostrarFoto(this)">🌸</span>
+  </div>
+
+  <div class="latido">💛</div>
+
+  <br><br>
+  <button onclick="mostrarSecreto()">Mensaje secreto 🔐</button>
+
+  <div class="secreto" id="secreto">
+    <p>Esta es una de mis fotos favoritas contigo 💛</p>
+    <img src="img/especial.jpg">
+  </div>
+
+</div>
+
+<script>
+
+// FLORES FONDO
+function crearFlor(){
+  const flor = document.createElement("div");
+  flor.classList.add("flor");
+  flor.innerText = "🌼";
+  flor.style.left = Math.random()*100+"vw";
+  flor.style.animationDuration = (3+Math.random()*5)+"s";
+  document.body.appendChild(flor);
+  setTimeout(()=>flor.remove(),8000);
+}
+setInterval(crearFlor,500);
+
+// CARTA
+const texto = "Quería darte estas flores amarillas porque me haces muy feliz. Gracias por cada momento contigo, por tu sonrisa y por estar en mi vida. Con cariño… 💛";
+let i=0;
+
+function iniciar(){
+  escribir();
+}
+
+function escribir(){
+  if(i < texto.length){
+    document.getElementById("carta").innerHTML += texto.charAt(i);
+    i++;
+    setTimeout(escribir,40);
+  }
+}
+
+// CARRUSEL
+const fotos = ["img/foto1.jpg","img/foto2.jpg","img/foto3.jpg"];
+let index = 0;
+
+setInterval(()=>{
+  index = (index + 1) % fotos.length;
+  document.getElementById("slide").src = fotos[index];
+},3000);
+
+// FOTO AL HACER CLICK
+function mostrarFoto(el){
+  const fotos = ["img/foto1.jpg","img/foto2.jpg","img/foto3.jpg"];
+  const random = fotos[Math.floor(Math.random()*fotos.length)];
+
+  const img = document.createElement("img");
+  img.src = random;
+  img.style.width = "120px";
+  img.style.position = "absolute";
+  img.style.left = el.getBoundingClientRect().left + "px";
+  img.style.top = el.getBoundingClientRect().top + "px";
+  img.style.borderRadius = "15px";
+  img.style.animation = "subir 2s forwards";
+
+  document.body.appendChild(img);
+  setTimeout(()=>img.remove(),2000);
+}
+
+// SECRETO
+function mostrarSecreto(){
+  document.getElementById("secreto").style.display="block";
+}
+
+</script>
+
+</body>
+</html>
